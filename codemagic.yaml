@@ -1,0 +1,25 @@
+workflows:
+  ios-release:
+    name: "iOS Release Build"
+    instance_type: mac_mini_m2
+    environment:
+      vars:
+        CORDOVA_PLATFORM: "ios"
+      xcode: 15.2
+    scripts:
+      - name: Install Cordova
+        script: |
+          npm install -g cordova
+          npm install
+      - name: Add iOS platform
+        script: |
+          cordova platform add ios
+      - name: Build iOS project
+        script: |
+          cordova build ios --release
+    artifacts:
+      - "platforms/ios/build/device/*.ipa"
+    publishing:
+      email:
+        recipients:
+          - "altimvlad@gmail.com"
